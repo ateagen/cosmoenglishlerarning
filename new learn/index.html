@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Datang</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 90%;
+      transition: all 0.3s ease;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+    }
+
+    .btn-daftar {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .btn-daftar:hover {
+      background-color: #218838;
+    }
+
+    .btn-admin {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .btn-admin:hover {
+      background-color: #c82333;
+    }
+
+    /* Modal styling */
+    .modal {
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background: white;
+      color: #333;
+      padding: 30px 25px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: left;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin: 15px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 12px;
+      font-weight: bold;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .modal-content .submit-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .modal-content .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .modal-content .error-msg {
+      color: red;
+      font-weight: bold;
+      display: none;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 25px;
+      }
+
+      h1 {
+        font-size: 1.7em;
+      }
+
+      .btn {
+        font-size: 15px;
+        padding: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 1.4em;
+      }
+
+      p {
+        font-size: 0.95em;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Selamat Datang</h1>
+    <p>Silakan pilih menu di bawah ini:</p>
+    <button class="btn btn-daftar" onclick="window.location.href='form.html'">Daftar</button>
+    <button class="btn btn-admin" onclick="openModal()">Admin</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="adminModal">
+    <div class="modal-content">
+      <h3>Masukkan Sandi Admin</h3>
+      <input type="password" id="adminPassword" placeholder="Masukkan sandi">
+      <button class="submit-btn" onclick="checkPassword()">Masuk Admin</button>
+      <div class="error-msg" id="errorMsg">❌ Sandi salah! Hanya admin yang bisa akses halaman ini.</div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('adminModal');
+    const input = document.getElementById('adminPassword');
+    const errorMsg = document.getElementById('errorMsg');
+
+    function openModal() {
+      modal.style.display = 'flex';
+      input.value = '';
+      errorMsg.style.display = 'none';
+      setTimeout(() => input.focus(), 100);
+    }
+
+    function checkPassword() {
+      const password = input.value;
+      if (password === "1928") {
+        window.location.href = "admin.html";
+      } else {
+        errorMsg.style.display = 'block';
+        input.value = '';
+      }
+    }
+
+    // Tutup modal jika klik di luar
+    window.onclick = function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

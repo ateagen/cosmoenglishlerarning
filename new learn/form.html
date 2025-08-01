@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Formulir Pendaftaran</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h2 {
+      margin-top: 0;
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #444;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    /* Pop-up sukses */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .popup-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      color: #333;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .popup-content h3 {
+      margin-bottom: 15px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 20px;
+      }
+
+      input, select, button {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Formulir Pendaftaran</h2>
+    <form id="daftarForm">
+      <label for="nama">Nama Lengkap:</label>
+      <input type="text" id="nama" name="nama" required />
+
+      <label for="alamat">Alamat:</label>
+      <input type="text" id="alamat" name="alamat" required />
+
+      <label for="ttl">Tanggal Lahir:</label>
+      <input type="date" id="ttl" name="ttl" required />
+
+      <label for="pendidikan">Pendidikan Terakhir:</label>
+      <select id="pendidikan" name="pendidikan" required>
+        <option value="">-- Pilih --</option>
+        <option value="SMA/SMK">SMA / SMK</option>
+        <option value="Diploma">Diploma</option>
+        <option value="Sarjana">Sarjana</option>
+        <option value="Lainnya">Lainnya</option>
+      </select>
+
+      <label for="wa">No. WhatsApp:</label>
+      <input type="tel" id="wa" name="wa" required placeholder="08xxxxxxxxxx" />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="successPopup">
+    <div class="popup-content">
+      <h3>✅ Terima kasih telah mendaftar!</h3>
+      <p>Anda akan dihubungi admin melalui WA secepatnya.</p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('daftarForm');
+    const popup = document.getElementById('successPopup');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Simpan data ke localStorage (sementara, bisa diganti ke server atau Firebase)
+      const data = {
+        nama: form.nama.value,
+        alamat: form.alamat.value,
+        ttl: form.ttl.value,
+        pendidikan: form.pendidikan.value,
+        wa: form.wa.value,
+      };
+
+      let daftar = JSON.parse(localStorage.getItem('pendaftar') || '[]');
+      daftar.push(data);
+      localStorage.setItem('pendaftar', JSON.stringify(daftar));
+
+      // Tampilkan popup
+      popup.style.display = 'flex';
+
+      // Reset form
+      form.reset();
+
+      // Sembunyikan popup otomatis setelah 4 detik
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 4000);
+    });
+  </script>
+</body>
+</html>
